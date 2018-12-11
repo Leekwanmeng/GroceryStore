@@ -1,5 +1,5 @@
 const express = require('express');
-const login = require('./routes/routes');
+const routes = require('./routes/routes');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -22,8 +22,9 @@ router.get('/', (req, res) => {
 });
 
 //route to handle user registration
-router.post('/signup',login.signup);
-router.post('/login',login.login)
+router.post('/signup',routes.signup);
+router.post('/login',routes.login);
+router.get('/allitems',routes.allitems);
 app.use('/api', router);
 
 app.on("error", err => console.log(err));

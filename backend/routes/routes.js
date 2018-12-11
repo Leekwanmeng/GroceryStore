@@ -85,3 +85,28 @@ exports.login = (req,res) => {
         }
     });
 }
+
+// Get items handler
+exports.allitems = (req,res) => {
+    db.query(`SELECT i.item_id, i.item_name, i.description, i.item_price, c.category_name, m.merchant_name
+                FROM ITEM i
+            LEFT JOIN CATEGORY c on (i.category_id = c.category_id)
+            LEFT JOIN MERCHANT m on (i.merchant_id = m.merchant_id)`,
+        (error, results) => {
+        if (error) {
+            res.status(400).send({
+                error:"error ocurred"
+            });
+        }
+        if (results.length > 0) {
+            res.send({
+                "success":"get items sucessful",
+                value: results
+            });
+        } else {
+            res.status(404).send({
+                error:"No items found"
+            });
+        }
+    });
+}

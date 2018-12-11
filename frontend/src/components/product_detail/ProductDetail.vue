@@ -9,6 +9,8 @@
           <p>
             {{ product.description }}
           </p>
+          <p><strong>Category: </strong>{{ product.category_name }}</p>
+          <p><strong>Merchant: </strong>{{ product.merchant_name }}</p>
 
           <div>
             <span class="title is-3"><strong>{{ product.price }}&euro;</strong></span>

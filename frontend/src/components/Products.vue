@@ -13,6 +13,8 @@
       </div>
       <div class="content is-clearfix">
         <p>{{ product.description }}</p>
+        <p><strong>Category: </strong>{{ product.category_name }}</p>
+        <p><strong>Merchant: </strong>{{ product.merchant_name }}</p>
         <p class="is-pulled-right">
           <span class="title is-4"><strong>${{ product.price }} ea.</strong></span>
         </p>

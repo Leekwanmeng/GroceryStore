@@ -1,3 +1,7 @@
+# Grocery Store
+
+Online web store built on Vuejs, Nodejs and MySQL
+
 
 ### Installing
 
