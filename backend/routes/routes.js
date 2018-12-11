@@ -15,6 +15,9 @@ db.connect((err) => {
     console.log('Mysql connected');
 });
 
+
+// POST ROUTES //
+
 // Sign up handler
 exports.signup = (req,res) => {
     var email = req.body.email;
@@ -40,14 +43,17 @@ exports.signup = (req,res) => {
                     "email":req.body.email
                 };
                 db.query(insertQuery, users, 
-                    (error, results) => {
+                    (error, r) => {
                     if (error) {
                         res.status(400).send({
                             error:"error ocurred"
                         });
                     }
                     res.status(200).send({
-                        "success":"user registered sucessfully"
+                        "success":"user registered sucessfully",
+                        value: {
+                            'customer_id': results[0].customer_id
+                        }
                     });
                 });
             }
@@ -71,7 +77,10 @@ exports.login = (req,res) => {
             if (results[0].password == password) {
                 res.send({
                     "success":"login sucessful",
-                    value: results[0].name
+                    value: {
+                        'name': results[0].name,
+                        'customer_id': results[0].customer_id
+                    }
                 });
             } else {
                 res.status(204).send({
@@ -86,8 +95,82 @@ exports.login = (req,res) => {
     });
 }
 
+// New order for customer
+exports.newOrder = (req,res) => {
+    var order = {
+        'total_amount': req.body.total_amount,
+        'customer_id': req.body.customer_id
+    };
+    var insertQuery = `INSERT INTO CUSTOMER_ORDER SET ?;`
+    db.query(insertQuery, order,
+        (error, results) => {
+            if (error) {
+                res.status(400).send({
+                    error:"error ocurred in insert"
+                });
+            }
+            res.send({
+                "success":"insert success"
+            });
+        }
+    );
+}
+
+
+// Add items to existing order
+exports.addItemToOrder = (req,res) => {
+    var orderEntry = {
+        'quantity':req.body.quantity,
+        'total_cost':req.body.total_cost,
+        'item_id':req.body.item_id,
+        'customer_order_id':req.body.order_id
+    };
+    var insertQuery = `INSERT INTO ORDER_ITEM SET ?;`
+    db.query(insertQuery, orderEntry,
+        (error, results) => {
+            if (error) {
+                res.status(400).send({
+                    error:"error ocurred in insert"
+                });
+            }
+            res.status(200).send({
+                "success":"order item registered sucessfully",
+            });
+        }
+    );
+}
+
+
+// GET ROUTES //
+
+// Get previous order id
+exports.getPrevOrder = (req,res) => {
+    var selectQuery = `SELECT MAX(customer_order_id) as maxId FROM CUSTOMER_ORDER;`
+    db.query(selectQuery,
+        (err, results) => {
+            if (err) {
+                res.status(400).send({
+                    error:"error ocurred in select"
+                });
+            }
+            if (results.length > 0) {
+                res.send({
+                    "success":"insert, select sucessful",
+                    value: {
+                        'order_id': results[0].maxId
+                    }
+                });
+            } else {
+                res.status(404).send({
+                    error:"order not selected"
+                });
+            }
+        }
+    );
+}
+
 // Get items handler
-exports.allitems = (req,res) => {
+exports.allItems = (req,res) => {
     db.query(`SELECT i.item_id, i.item_name, i.description, i.item_price, c.category_name, m.merchant_name
                 FROM ITEM i
             LEFT JOIN CATEGORY c on (i.category_id = c.category_id)
@@ -110,3 +193,4 @@ exports.allitems = (req,res) => {
         }
     });
 }
+

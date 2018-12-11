@@ -28,7 +28,7 @@ export default {
       // Clears all previous items to prevent duplicates
       this.$store.commit('clearAllItems');
 
-      let uri = 'http://localhost:3000/api/allitems';
+      let uri = 'http://localhost:3000/api/all-items';
       axios.get(uri)
       .then((res) => {
         // console.log(res.data.value);

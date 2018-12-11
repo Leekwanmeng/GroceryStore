@@ -88,6 +88,7 @@ export default {
       emailPlaceholder: 'Your email',
       name: '',
       email: '',
+      id: -1,
       password: '',
       highlightEmailWithError: null,
       highlightPasswordWithError: null,
@@ -135,16 +136,20 @@ export default {
         }
         axios.post(uri, customer)
         .then((res) => {
-          console.log(res.status);
+          // console.log(res.status);
           if (res.status == 204) {
             this.highlightPasswordWithError = true;
             this.passwordRequiredLabel = this.passwordIncorrectLabel;
           } else {
-            this.name = res.data.value;
+            this.name = res.data.value.name;
+            this.id = res.data.value.customer_id;
+            console.log(this.id);
             this.highlightEmailWithError = false;
             this.highlightPasswordWithError = false;
             this.isFormSuccess = true;
             this.$store.commit('setUserName', this.name);
+            this.$store.commit('setUserEmail', this.email);
+            this.$store.commit('setUserID', this.id);
             this.$store.commit('isUserLoggedIn', this.isFormSuccess);
           }
         })

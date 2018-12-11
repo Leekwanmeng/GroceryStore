@@ -45,7 +45,10 @@ export default new Vuex.Store({
       isSignedUp: false,
       hasSearched: false,
       name: '',
-      productTitleSearched: ''
+      email: '',
+      id: -1,
+      productTitleSearched: '',
+      order_id: 1
     },
     systemInfo: {
       openLoginModal: false,
@@ -74,6 +77,15 @@ export default new Vuex.Store({
     },
     getUserName: state => {
       return state.userInfo.name;
+    },
+    getUserEmail: state => {
+      return state.userInfo.email;
+    },
+    getUserID: state => {
+      return state.userInfo.id;
+    },
+    getOrderID: state => {
+      return state.userInfo.order_id;
     },
     isLoginModalOpen: state => {
       return state.systemInfo.openLoginModal;
@@ -128,6 +140,15 @@ export default new Vuex.Store({
     },
     setUserName: (state, name) => {
       state.userInfo.name = name;
+    },
+    setUserEmail: (state, email) => {
+      state.userInfo.email = email;
+    },
+    setUserID: (state, id) => {
+      state.userInfo.id = id;
+    },
+    setOrderID: (state, order_id) => {
+      state.userInfo.order_id = order_id;
     },
     setProductTitleSearched: (state, titleSearched) => {
       state.userInfo.productTitleSearched = titleSearched;

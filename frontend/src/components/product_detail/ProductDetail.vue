@@ -5,7 +5,7 @@
           <img src="https://bulma.io/images/placeholders/480x480.png">
         </figure>
         <div class="card-content column is-two-thirds">
-          <h2 class="title is-4">{{ product.title }}</h2>
+          <h2 class="title is-2">{{ product.title }}</h2>
           <p>
             {{ product.description }}
           </p>
@@ -13,7 +13,7 @@
           <p><strong>Merchant: </strong>{{ product.merchant_name }}</p>
 
           <div>
-            <span class="title is-3"><strong>{{ product.price }}&euro;</strong></span>
+            <span class="title is-3"><strong>${{ product.price }} ea.</strong></span>
           </div>
           <div class="select is-rounded is-small">
             <select @change="onSelectQuantity(product.id)" v-model="selected">

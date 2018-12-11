@@ -175,7 +175,10 @@ export default {
           this.highlightEmailWithError = false;
           this.highlightPasswordWithError = false;
           this.isFormSuccess = true;
+          this.id = res.data.value.customer_id;
           this.$store.commit('setUserName', this.name);
+          this.$store.commit('setUserEmail', this.email);
+          this.$store.commit('setUserID', this.id);
           this.$store.commit('isUserSignedUp', this.isFormSuccess);
           this.$store.commit('isUserLoggedIn', this.isFormSuccess);
         })

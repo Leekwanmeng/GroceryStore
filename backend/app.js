@@ -24,7 +24,10 @@ router.get('/', (req, res) => {
 //route to handle user registration
 router.post('/signup',routes.signup);
 router.post('/login',routes.login);
-router.get('/allitems',routes.allitems);
+router.post('/new-order',routes.newOrder);
+router.post('/add-item-to-order',routes.addItemToOrder);
+router.get('/get-prev-order',routes.getPrevOrder);
+router.get('/all-items',routes.allItems);
 app.use('/api', router);
 
 app.on("error", err => console.log(err));

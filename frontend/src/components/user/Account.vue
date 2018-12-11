@@ -2,17 +2,19 @@
   <div class="section">
     <div class="card">
       <div class="field">
-        <label class="label">Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="e.g Alex Smith">
+        <h1 class="label">Name</h1>
+        <div>
+          <h2 class="header">{{ getUserName }}</h2>
         </div>
       </div>
       <div class="field">
         <label class="label">Email</label>
-        <div class="control">
-          <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+        <div>
+          <p class="header">{{ getUserEmail }}</p>
         </div>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -24,6 +26,26 @@ export default {
     return {
 
     };
-  }
+  },
+  computed: {
+		getUserName () {
+			let name = this.$store.getters.getUserName;
+			
+			if (name === '') {
+				return 'user';
+			} else {
+				return name;
+			}
+    },
+    getUserEmail () {
+			let email = this.$store.getters.getUserEmail;
+			
+			if (email === '') {
+				return '';
+			} else {
+				return email;
+			}
+		}
+	}
 };
 </script>
