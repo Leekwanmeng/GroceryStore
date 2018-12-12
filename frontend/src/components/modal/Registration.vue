@@ -163,28 +163,39 @@ export default {
         && this.repeatPassword
         ) {
       
-        let uri = 'http://localhost:3000/api/signup';
-        let customer = {
-          'name':this.name,
-          'password':this.password,
+        let uri = 'http://localhost:3000/api/check-user';
+        let email = {
           'email':this.email
         }
-        axios.post(uri, customer)
+        axios.get(uri, email)
         .then((res) => {
-          console.log(res);
-          this.highlightEmailWithError = false;
-          this.highlightPasswordWithError = false;
-          this.isFormSuccess = true;
-          this.id = res.data.value.customer_id;
-          this.$store.commit('setUserName', this.name);
-          this.$store.commit('setUserEmail', this.email);
-          this.$store.commit('setUserID', this.id);
-          this.$store.commit('isUserSignedUp', this.isFormSuccess);
-          this.$store.commit('isUserLoggedIn', this.isFormSuccess);
+          // console.log(res);
+          let customer = {
+            'name':this.name,
+            'password':this.password,
+            'email':this.email
+          }
+          axios.post('http://localhost:3000/api/signup', customer)
+          .then((r) => {
+            axios.get('http://localhost:3000/api/get-prev-customer')
+            .then((response) => {
+              this.id = response.data.value.customer_id
+              this.highlightEmailWithError = false;
+              this.highlightPasswordWithError = false;
+              this.isFormSuccess = true;
+              
+              this.$store.commit('setUserName', this.name);
+              this.$store.commit('setUserEmail', this.email);
+              this.$store.commit('setUserID', this.id);
+              this.$store.commit('isUserSignedUp', this.isFormSuccess);
+              this.$store.commit('isUserLoggedIn', this.isFormSuccess);
+            });
+          })
+          .catch((e) => {console.log(e);});
         })
         .catch((err) => {
           // if res code 409, email address taken
-          console.log(err.response.status);
+          console.log(err);
           if (err.response.status == 409) {
             this.highlightEmailWithError = true;
             this.emailErrorLabel = this.emailTakenLabel;

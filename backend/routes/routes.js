@@ -20,46 +20,24 @@ db.connect((err) => {
 
 // Sign up handler
 exports.signup = (req,res) => {
-    var email = req.body.email;
-    var selectQuery = 'SELECT * FROM CUSTOMER WHERE email = ?';
+    var users= {
+        "name":req.body.name,
+        "password":req.body.password,
+        "email":req.body.email
+    };
     var insertQuery = 'INSERT INTO CUSTOMER SET ?';
-    db.query(selectQuery, [email], 
+    db.query(insertQuery, [users], 
         (err, results) => {
             if (err) {
                 res.status(400).send({
                     error:"error ocurred"
                 });
-                throw err;
             }
-            if (results.length > 0) {
-                res.status(409).send({
-                    error:"Email address already taken"
-                });
-                return;
-            } else {
-                var users= {
-                    "name":req.body.name,
-                    "password":req.body.password,
-                    "email":req.body.email
-                };
-                db.query(insertQuery, users, 
-                    (error, r) => {
-                    if (error) {
-                        res.status(400).send({
-                            error:"error ocurred"
-                        });
-                    }
-                    res.status(200).send({
-                        "success":"user registered sucessfully",
-                        value: {
-                            'customer_id': results[0].customer_id
-                        }
-                    });
-                });
-            }
-        });
-        
-    
+            res.send({
+                "success":"user registered sucessfully",  
+            });
+
+        });   
 }
 
 // Login handler
@@ -140,8 +118,62 @@ exports.addItemToOrder = (req,res) => {
     );
 }
 
-
 // GET ROUTES //
+
+// Check for existing user
+exports.checkUser = (req, res) => {
+    var email = req.body.email;
+    var selectQuery = 'SELECT * FROM CUSTOMER WHERE email = ?';
+    db.query(selectQuery, [email], 
+        (err, results) => {
+            if (err) {
+                res.status(400).send({
+                    error:"error ocurred"
+                });
+                throw err;
+            }
+            if (results.length > 0) {
+                res.status(409).send({
+                    error:"Email address already taken"
+                });
+            } else {
+                res.send({
+                    'success': "no existing user"
+                });
+            }
+        });   
+}
+
+
+// Get previous customer id
+exports.getPrevCustomer = (req,res) => {
+    var selectQuery = `SELECT MAX(customer_id) as maxId FROM CUSTOMER;`
+    db.query(selectQuery,
+        (err, results) => {
+            if (err) {
+                res.status(400).send({
+                    error:"error ocurred in select"
+                });
+            }
+            if (results.length > 0) {
+                res.send({
+                    "success":"select sucessful",
+                    value: {
+                        'customer_id': results[0].maxId
+                    }
+                });
+            } else {
+                res.status(404).send({
+                    error:"customer not selected"
+                });
+            }
+        }
+    );
+}
+
+
+
+
 
 // Get previous order id
 exports.getPrevOrder = (req,res) => {

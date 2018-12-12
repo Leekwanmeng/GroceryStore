@@ -26,6 +26,10 @@ router.post('/signup',routes.signup);
 router.post('/login',routes.login);
 router.post('/new-order',routes.newOrder);
 router.post('/add-item-to-order',routes.addItemToOrder);
+
+
+router.get('/check-user',routes.checkUser);
+router.get('/get-prev-customer',routes.getPrevCustomer);
 router.get('/get-prev-order',routes.getPrevOrder);
 router.get('/all-items',routes.allItems);
 app.use('/api', router);
