@@ -122,12 +122,6 @@ export default {
         this.highlightEmailWithError = false;
       }
 
-      // if (!this.password) {
-      //   this.highlightPasswordWithError = true;
-      // } else {
-      //   this.highlightPasswordWithError = false;
-      // }
-
       if (this.email && this.password) {
         let uri = 'http://localhost:3000/api/login';
         let customer = {

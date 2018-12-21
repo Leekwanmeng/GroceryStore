@@ -3,7 +3,9 @@
 Online web grocery store built on Vue.js, Node.js and MySQL
 
 `backend/` contains code for Node.js, main script at `app.js`
+
 `backend/routes` contains API routes for Node.js, to be queried by Vue.js
+
 `frontend/` contains code for Vue.js
 
 
@@ -35,7 +37,7 @@ cd backend/
 # install dependencies
 npm install
 
-# serve with at localhost:3000
+# served at localhost:3000
 nodemon app.js OR node app.js
 ```
 

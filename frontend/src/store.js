@@ -5,41 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    products: [
-      // {
-      //   id: 1,
-      //   title: 'Apple',
-      //   description: 'Good crunch. Beautiful red coating. Sweet and juicy.',
-      //   price: 1,
-      //   category_name: 'Fruits',
-      //   merchant_name: 'Fuji',
-      //   isAddedToCart: false,
-      //   isAddedBtn: false,
-      //   quantity: 1
-      // },
-      // {
-      //   id: 2,
-      //   title: 'Banana',
-      //   description: 'Soft and easy on the teeth. Cool curve shape. Comes in a bunch.',
-      //   price: 3,
-      //   category_name: 'Fruits',
-      //   merchant_name: 'Dole',
-      //   isAddedToCart: false,
-      //   isAddedBtn: false,
-      //   quantity: 1
-      // },
-      // {
-      //   id: 3,
-      //   title: 'Peach',
-      //   description: 'Balanced amount of texture. Succulent and full of flavour.',
-      //   price: 2,
-      //   category_name: 'Fruits',
-      //   merchant_name: 'Chamolet',
-      //   isAddedToCart: false,
-      //   isAddedBtn: false,
-      //   quantity: 1
-      // }
-    ],
+    products: [],
     userInfo: {
       isLoggedIn: false,
       isSignedUp: false,
